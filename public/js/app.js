@@ -58,6 +58,13 @@
                   return it.name;
               });
           };
+          $rootScope.$on('showBean', function (event, artifact, phase, host,klass,type, opInfo) {
+              $scope.artifact = artifact;
+              $scope.phase = phase;
+              $scope.host = host;
+              $scope.klass = klass;
+              $scope.type = type;
+          });
           $scope.execute = function (opName, opDetail) {
               var path = '/api/exec/' + $scope.artifact + '/' + $scope.phase + '/' +$scope.host + '/' + encodeURIComponent($scope.klass) + '/' + encodeURIComponent($scope.type) + "?" + (new Date());
               $http.post(path, {
