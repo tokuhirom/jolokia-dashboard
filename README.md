@@ -4,11 +4,10 @@ This is a tiny dashboard app for jolokia.
 
 ## Install
 
-    $ gem install sinatra
-
-## Usage
-
-    $ JOLOKIA_CONFIG=/path/to/your/config.rb ruby jolokia-dashboard.rb
+    $ sudo yum install ruby
+    $ gem install bundler
+    $ bundle install
+    $ JOLOKIA_CONFIG=/path/to/your/config.rb bundle exec ruby jolokia-dashboard.rb
 
 ## Screenshot
 
