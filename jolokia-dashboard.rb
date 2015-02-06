@@ -62,6 +62,7 @@ class JolokiaDashboard < Sinatra::Base
     end
 
     def exec(klass, type, opName, args)
+      args = [] if args.nil?
       uri = URI(@base+"/exec/#{URI.escape(klass)}:#{URI.escape(type)}/#{URI.escape(opName)}/#{args.map {|s| URI.escape(s) }.join("/") }")
       puts uri
       content = Net::HTTP.get(uri)

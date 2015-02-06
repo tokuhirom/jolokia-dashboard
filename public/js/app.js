@@ -38,6 +38,13 @@
               $scope.klass = klass;
               $scope.type = type;
               $scope.opInfo = opInfo;
+
+              $scope.args = {};
+              var keys = Object.keys(opInfo);
+              for (var i=0,l=keys.length; i<l; i++) {
+                  $scope.args[keys[i]] = [];
+              }
+
               var path = '/api/read/' + artifact + '/' + phase + '/' +host + '/' + encodeURIComponent(klass) + '/' + encodeURIComponent(type);
               $http.get(path).success(
                   function (dat) {
@@ -45,33 +52,19 @@
                 }
               );
           });
-      })
-      .controller('OpController', function($scope, $http, $rootScope) {
-          $scope.args = [];
-          $scope.init = function (artifact,phase,host,klass,type, opDetail) {
-              $scope.artifact = artifact;
-              $scope.phase = phase;
-              $scope.host = host;
-              $scope.klass = klass;
-              $scope.type = type;
-              $scope.args = opDetail.args.map(function (it) {
-                  return it.name;
-              });
-          };
-          $rootScope.$on('showBean', function (event, artifact, phase, host,klass,type, opInfo) {
-              $scope.artifact = artifact;
-              $scope.phase = phase;
-              $scope.host = host;
-              $scope.klass = klass;
-              $scope.type = type;
-          });
+
           $scope.execute = function (opName, opDetail) {
-              var path = '/api/exec/' + $scope.artifact + '/' + $scope.phase + '/' +$scope.host + '/' + encodeURIComponent($scope.klass) + '/' + encodeURIComponent($scope.type) + "?" + (new Date());
-              $http.post(path, {
+              var path = '/api/exec/' + $scope.artifact + '/' + $scope.phase + '/' + $scope.host + '/' + encodeURIComponent($scope.klass) + '/' + encodeURIComponent($scope.type) + "?" + (new Date()).getTime();
+              $scope.status = "Accessing to " + path;
+              var data = {
                   opName: opName,
-                  args: $scope.args
-              }).success(function (dat) {
+                  args: $scope.args[opName]
+              };
+              console.log(path);
+              console.log(data);
+              $http.post(path, data).success(function (dat) {
                   alert(JSON.stringify(dat.value));
+                $scope.status = "OK: " + path;
               }).error(function (dat) {
                   alert("Error: " + dat);
               });

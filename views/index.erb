@@ -40,7 +40,7 @@
                </ul>
            </div>
         </div>
-        <div ng-controller="BeanController" class="col-md-7">
+        <div ng-controller="BeanController as bean" class="col-md-7">
             <ol class="breadcrumb">
                 <li>{{artifact}}</li>
                 <li>{{phase}}</li>
@@ -56,15 +56,18 @@
                 </tr>
             </table>
             <h2>Operations</h2>
-            <div class="op" ng-repeat="(name,opDetail) in opInfo" ng-controller="OpController" ng-init="init(artifact,phase,host,klass,type,opDetail)">
-                {{opDetail.ret}} {{name}}(
-                <div ng-repeat="(i, arg) in opDetail.args" class="arg">
-                    <input type="text" placeholder="{{arg.name}}" ng-model="args[i]">,
-                </div>
-                )
-                <button ng-click="execute(name, opDetail)" class="btn btn-default">Execute</button>
-                <div class="desc">{{opDetail.desc}}</div>
+            <div class="op" ng-repeat="(name,opDetail) in opInfo" >
+                <form method="post" ng-submit="execute(name, opDetail)">
+                    {{opDetail.ret}} {{name}}(
+                    <div ng-repeat="(i, arg) in opDetail.args" class="arg">
+                        <input type="text" placeholder="{{arg.name}}" ng-model="args[name][i]">,
+                    </div>
+                    )
+                    <input type="submit" class="btn btn-default" value="Execute">
+                    <div class="desc">{{opDetail.desc}}</div>
+                </form>
             </div>
+            <p>{{status}}</p>
         </div>
       </div>
     </div>
