@@ -1,0 +1,72 @@
+<!doctype html>
+<html ng-app="jolokiaApp">
+  <head>
+      <meta charset="utf8">
+      <title><%= @title %> - Jolokia dashboard</title>
+    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/app.css">
+    <script type="text/javascript" src="./js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="./js/angular.min.js"></script>
+    <script type="text/javascript" src="./js/app.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+          <h1><%= @title %> Jolokia Dashboard</h1>
+      </div>
+      <div class="row">
+        <div ng-controller="HostListController" class="sidebar col-md-3">
+            <div ng-repeat="(artifact, phases) in servers">
+                <h1>{{artifact}}</h1>
+                <div ng-repeat="(phase, servers) in phases">
+                    <h2>{{phase}}</h2>
+                    <ul>
+                        <li ng-repeat="server in servers">
+                            <a href="#" ng-click="showServer(artifact,phase,server)">{{server.host}}:{{server.jolokia_port}}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div ng-controller="CategoryListController" class="col-md-2 category-list">
+           <div >
+               <ul>
+                   <li ng-repeat="(klass,details) in list.value">{{klass}}
+                    <ul>
+                        <li ng-repeat="(type, info) in details">
+                        <a href="#" ng-click="showBean(artifact,phase,host,klass,type,info.op)">{{type}}</a>
+                        </li>
+                    </ul>
+                   </li>
+               </ul>
+           </div>
+        </div>
+        <div ng-controller="BeanController" class="col-md-7">
+            <ol class="breadcrumb">
+                <li>{{artifact}}</li>
+                <li>{{phase}}</li>
+                <li>{{host}}</li>
+                <li>{{klass}}</li>
+                <li>{{type}}</li>
+            </ol>
+
+            <h2>Attributes</h2>
+            <table class="table table-bordered">
+                <tr ng-repeat="(name, value) in dat">
+                    <th>{{name}}</th><td>{{value}}</td>
+                </tr>
+            </table>
+            <h2>Operations</h2>
+            <div class="op" ng-repeat="(name,opDetail) in opInfo" ng-controller="OpController" ng-init="init(artifact,phase,host,klass,type,opDetail)">
+                {{opDetail.ret}} {{name}}(
+                <div ng-repeat="(i, arg) in opDetail.args" class="arg">
+                    <input type="text" placeholder="{{arg.name}}" ng-model="args[i]">,
+                </div>
+                )
+                <button ng-click="execute(name, opDetail)" class="btn btn-default">Execute</button>
+                <div class="desc">{{opDetail.desc}}</div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

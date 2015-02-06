@@ -1,0 +1,31 @@
+.sidebar ul {
+    list-style: none;
+    padding-left: 5px;
+}
+.sidebar h1 {
+    font-size: 100%;
+    border-bottom: #cccccc 1px solid;
+}
+.sidebar h2 {
+    font-size: 100%;
+}
+
+.category-list ul {
+    list-style: none;
+    padding-left: 5px;
+    word-break: break-all;
+}
+
+.op {
+    margin-bottom: 7px;
+}
+.op td {
+    word-break: break-all;
+}
+.op .desc {
+    padding-left: 10px;
+    color: #cccccc;
+}
+.op .arg {
+    display: inline;
+}
