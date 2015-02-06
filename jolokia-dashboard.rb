@@ -75,6 +75,14 @@ class JolokiaDashboard < Sinatra::Base
     end
   end
 
-  run!
 end
 
+require 'optparse'
+
+options = {}
+OptionParser.new { |o|
+    o.on('-p port', 'Set port number (default = 4567)') { |port| options[:port] = port.to_i }
+      o.on('-o address', 'Set address to bind (default = 0.0.0.0)') { |addr| options[:bind] = addr }
+}.parse!(ARGV.dup)
+
+JolokiaDashboard.run!(options)
