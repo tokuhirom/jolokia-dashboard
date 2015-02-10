@@ -1,0 +1,10 @@
+{
+     "name": "jolokia dashboard",
+     "version": "0.0.1",
+     "dependencies": {
+         "zepto": "1.1.6",
+         "vue": "0.11.5",
+         "bootstrap": "3.3.2",
+         "underscore" : "1.7.0"
+     }
+}

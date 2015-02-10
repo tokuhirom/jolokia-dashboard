@@ -13,6 +13,12 @@ This is a tiny dashboard app for jolokia.
 
 <img src="https://www.evernote.com/shard/s2/sh/3b1b081d-42aa-468d-8594-4a9596d2591c/a47eed3bbe5d28f11cda6b77f8cef070/deep/0/Sample---Jolokia-dashboard.png">
 
+## Development
+
+    > nmp install -g gulp
+    > npm install --save-dev gulp-bower
+    > gulp bower
+
 ## LICENSE
 
     The MIT License (MIT)
